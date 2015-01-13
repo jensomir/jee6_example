@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="plouse:war">
-    <output-path>$PROJECT_DIR$/target</output-path>
-    <root id="archive" name="plouse-1.0-SNAPSHOT.war">
-      <element id="artifact" artifact-name="plouse:war exploded" />
-    </root>
-  </artifact>
-</component>
