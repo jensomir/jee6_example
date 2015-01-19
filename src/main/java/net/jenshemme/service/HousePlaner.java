@@ -5,7 +5,8 @@ import net.jenshemme.domain.Person;
 import net.jenshemme.domain.Project;
 
 import javax.ejb.Stateless;
-import javax.ejb.TransactionManagement;
+import javax.inject.Inject;
+import java.util.Arrays;
 
 /**
  * The service to plan a house.
@@ -14,7 +15,13 @@ import javax.ejb.TransactionManagement;
 @Stateless
 public class HousePlaner {
 
+    @Inject
+    Project project;
+
     public Project createProject(Person client, Person projectManager, House... houses){
-        return new Project(client, projectManager, houses);
+        project.setClient(client);
+        project.setProjectManager(projectManager);
+        project.setHouses(Arrays.asList(houses));
+        return project;
     }
 }

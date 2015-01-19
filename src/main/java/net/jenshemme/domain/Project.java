@@ -1,54 +1,23 @@
 package net.jenshemme.domain;
 
-import java.util.Arrays;
 import java.util.Collection;
 
 /**
- * A house planning project.
- * Created by jensomir on 12.01.15.
+ * Extracted interface in order to demonstrate usage of Decorators.
  */
-public class Project {
+public interface Project {
 
-    private Person client;
-    private Person projectManager;
-    private Collection<House> houses;
+    Person getClient();
 
-    public Project(Person client, Person projectManager, House... houses) {
-        this.client = client;
-        this.projectManager = projectManager;
-        this.houses = Arrays.asList(houses);
-    }
+    void setClient(Person client);
 
-    public Person getClient() {
-        return client;
-    }
+    Person getProjectManager();
 
-    public void setClient(Person client) {
-        this.client = client;
-    }
+    void setProjectManager(Person projectManager);
 
-    public Person getProjectManager() {
-        return projectManager;
-    }
+    Collection<House> getHouses();
 
-    public void setProjectManager(Person projectManager) {
-        this.projectManager = projectManager;
-    }
+    void setHouses(Collection<House> houses);
 
-    public Collection<House> getHouses() {
-        return houses;
-    }
-
-    public void setHouses(Collection<House> houses) {
-        this.houses = houses;
-    }
-
-    @Override
-    public String toString() {
-        return "Project{" +
-                "client=" + client +
-                ", projectManager=" + projectManager +
-                ", houses=" + houses +
-                '}';
-    }
+    void setRandomProjectManager();
 }

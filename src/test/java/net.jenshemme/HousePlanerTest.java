@@ -1,16 +1,18 @@
 package net.jenshemme;
 
 import net.jenshemme.domain.Project;
+import net.jenshemme.instrumentation.ProjectDecorator;
 import net.jenshemme.service.HousePlaner;
-import org.junit.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
 
 import javax.ejb.EJB;
 import javax.ejb.embeddable.EJBContainer;
 import javax.naming.NamingException;
 import java.util.Date;
-import java.util.Properties;
 
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 public class HousePlanerTest {
 
@@ -22,13 +24,15 @@ public class HousePlanerTest {
         startPoint = new Date().getTime();
         container = EJBContainer.createEJBContainer();
         container.getContext().bind("inject", this);
+
     }
 
     @After
     public void stop() {
         container.close();
         long endPoint = new Date().getTime();
-        System.out.println("test took " + (endPoint - startPoint)/1000 + "s");
+        double testDuration = endPoint - startPoint;
+        System.out.println("test took about: " + testDuration / 1000 + "s");
     }
 
     @EJB
@@ -40,5 +44,16 @@ public class HousePlanerTest {
         Project emptyProject = testSubject.createProject(null, null);
         System.out.println(emptyProject);
         assertNotNull(emptyProject);
+        assertNull(emptyProject.getProjectManager());
+    }
+
+    @Test
+    public void testDecorator() throws Exception {
+        assertNotNull(testSubject);
+        Project project = testSubject.createProject(null, null);
+        assertNull(project.getProjectManager());
+        project.setRandomProjectManager();
+        assertNotNull(project.getProjectManager());
+        assertEquals(ProjectDecorator.cleverGuy.getName(), project.getProjectManager().getName());
     }
 }
