@@ -20,7 +20,6 @@ public abstract class ProjectTestDecorator implements Project {
 
     @Override
     public void setRandomProjectManager() {
-        System.out.println("TEST_DECORATED - TEST_DECORATED - TEST_DECORATED!!!");
         project.setProjectManager(testGuy);
     }
 

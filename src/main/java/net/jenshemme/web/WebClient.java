@@ -1,7 +1,7 @@
 package net.jenshemme.web;
 
 import net.jenshemme.domain.Project;
-import net.jenshemme.service.HousePlaner;
+import net.jenshemme.service.HousePlanner;
 
 import javax.inject.Inject;
 import javax.servlet.ServletException;
@@ -19,7 +19,7 @@ import java.io.PrintWriter;
 public class WebClient extends HttpServlet {
 
     @Inject
-    HousePlaner planningService;
+    HousePlanner planningService;
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {

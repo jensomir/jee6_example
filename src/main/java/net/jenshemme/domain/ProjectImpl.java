@@ -1,6 +1,7 @@
 package net.jenshemme.domain;
 
-import java.util.Collection;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A house planning project.
@@ -10,11 +11,12 @@ public class ProjectImpl implements Project {
 
     private Person client;
     private Person projectManager;
-    private Collection<House> houses;
+    private ArrayList<House> houses;
 
     public static final Person dumbGuy = new Person("Guy", "Dumb");
 
     public ProjectImpl() {
+        houses = new ArrayList<>();
     }
 
     @Override
@@ -38,13 +40,18 @@ public class ProjectImpl implements Project {
     }
 
     @Override
-    public Collection<House> getHouses() {
+    public List<House> getHouses() {
         return houses;
     }
 
     @Override
-    public void setHouses(Collection<House> houses) {
-        this.houses = houses;
+    public void setHouses(List<House> houses) {
+        this.houses = new ArrayList<>(houses);
+    }
+
+    @Override
+    public void addHouse(House house) {
+        this.houses.add(house);
     }
 
     @Override

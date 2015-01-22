@@ -1,6 +1,6 @@
 package net.jenshemme.domain;
 
-import java.util.Collection;
+import java.util.List;
 
 /**
  * Extracted interface in order to demonstrate usage of Decorators.
@@ -15,9 +15,11 @@ public interface Project {
 
     void setProjectManager(Person projectManager);
 
-    Collection<House> getHouses();
+    List<House> getHouses();
 
-    void setHouses(Collection<House> houses);
+    void setHouses(List<House> houses);
+
+    void addHouse(House house);
 
     void setRandomProjectManager();
 }

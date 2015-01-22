@@ -23,7 +23,6 @@ public abstract class ProjectDecorator implements Project {
 
     @Override
     public void setRandomProjectManager() {
-        System.out.println("DECORATED - DECORATED - DECORATED!!!");
         project.setProjectManager(cleverGuy);
     }
 }

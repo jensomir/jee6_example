@@ -8,22 +8,12 @@ import java.util.Arrays;
  */
 public class House {
 
-    private Person owner;
     private byte[] buildingPlan;
     private Address buildingSite;
 
-    public House(Person owner, byte[] buildingPlan, Address buildingSite) {
-        this.owner = owner;
+    public House(byte[] buildingPlan, Address buildingSite) {
         this.buildingPlan = buildingPlan;
         this.buildingSite = buildingSite;
-    }
-
-    public Person getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Person owner) {
-        this.owner = owner;
     }
 
     public byte[] getBuildingPlan() {
@@ -45,8 +35,7 @@ public class House {
     @Override
     public String toString() {
         return "House{" +
-                "owner=" + owner +
-                ", buildingPlan=" + Arrays.toString(buildingPlan) +
+                "buildingPlan=" + Arrays.toString(buildingPlan) +
                 ", buildingSite=" + buildingSite +
                 '}';
     }
