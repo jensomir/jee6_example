@@ -1,25 +1,78 @@
 package net.jenshemme.domain;
 
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
- * Extracted interface in order to demonstrate usage of Decorators.
+ * A house planning project.
+ * Created by jensomir on 12.01.15.
  */
-public interface Project {
+@Entity
+@Table(name = "PROJECT")
+public class Project implements Serializable {
 
-    Person getClient();
+    @Id
+    private String id;
 
-    void setClient(Person client);
+    @OneToOne
+    private Person client;
 
-    Person getProjectManager();
+    @OneToOne
+    private Person projectManager;
 
-    void setProjectManager(Person projectManager);
+    @OneToMany
+    private List<House> houses;
 
-    List<House> getHouses();
+    public Project() {
+        id = UUID.randomUUID().toString();
+        houses = new ArrayList<>();
+    }
 
-    void setHouses(List<House> houses);
+    public String getId() {
+        return id;
+    }
 
-    void addHouse(House house);
+    public void setId(String id) {
+        this.id = id;
+    }
 
-    void setRandomProjectManager();
+    public Person getClient() {
+        return client;
+    }
+
+    public void setClient(Person client) {
+        this.client = client;
+    }
+
+    public Person getProjectManager() {
+        return projectManager;
+    }
+
+    public void setProjectManager(Person projectManager) {
+        this.projectManager = projectManager;
+    }
+
+    public List<House> getHouses() {
+        return houses;
+    }
+
+    public void setHouses(List<House> houses) {
+        this.houses = new ArrayList<>(houses);
+    }
+
+    public void addHouse(House house) {
+        this.houses.add(house);
+    }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "client=" + client +
+                ", projectManager=" + projectManager +
+                ", houses=" + houses +
+                '}';
+    }
 }

@@ -1,19 +1,42 @@
 package net.jenshemme.domain;
 
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Arrays;
+import java.util.UUID;
 
 /**
  * Describes a house.
  * Created by jensomir on 12.01.15.
  */
-public class House {
+@Entity
+@Table(name = "HOUSE")
+public class House implements Serializable {
 
+    @Id
+    String id;
+
+    @Lob
     private byte[] buildingPlan;
+
+    @OneToOne
     private Address buildingSite;
+
+    public House() {
+        id = UUID.randomUUID().toString();
+    }
 
     public House(byte[] buildingPlan, Address buildingSite) {
         this.buildingPlan = buildingPlan;
         this.buildingSite = buildingSite;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public byte[] getBuildingPlan() {

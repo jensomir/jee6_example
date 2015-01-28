@@ -11,6 +11,8 @@ import net.jenshemme.instrumentation.TracingInterceptor;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.interceptor.Interceptors;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import java.util.Arrays;
 
 /**
@@ -20,11 +22,14 @@ import java.util.Arrays;
 @Stateless
 public class HousePlanner {
 
-    @Inject
-    private Project project;
+    @PersistenceContext(unitName = "plousepu")
+    EntityManager entityManager;
 
     @Inject
-    private ContextRegistry registry;
+    Project project;
+
+    @Inject
+    ContextRegistry registry;
 
     @Interceptors(TracingInterceptor.class)
     public Project createProject(Person client, Person projectManager, House... houses) {
@@ -32,17 +37,18 @@ public class HousePlanner {
         project.setProjectManager(projectManager);
         if (houses == null) houses = new House[0];
         project.setHouses(Arrays.asList(houses));
+        entityManager.persist(project);
         return project;
     }
 
     @Interceptors({TracingInterceptor.class, AuthorizationInterceptor.class})
-    public Project updateProjectWithoutLogin(Project project) {
+    public Project updateProjectWithoutLogin(Project projectManipulator) {
         // merge given project into persistence context
         return project;
     }
 
     @Interceptors({LogInInterceptor.class, TracingInterceptor.class, AuthorizationInterceptor.class})
-    public Project updateProject(Project project) {
+    public Project updateProject(Project projectManipulator) {
         // merge given project into persistence context
         return project;
     }

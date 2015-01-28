@@ -1,7 +1,7 @@
 package net.jenshemme.instrumentation;
 
 import net.jenshemme.domain.Person;
-import net.jenshemme.domain.Project;
+import net.jenshemme.service.ProjectManipulator;
 
 import javax.decorator.Decorator;
 import javax.decorator.Delegate;
@@ -12,17 +12,17 @@ import javax.inject.Inject;
  * The decorator. It only intercepts on usage of method 'setProjectManager(...)'.
  */
 @Decorator
-public abstract class ProjectDecorator implements Project {
+public abstract class ProjectManipulatorDecorator implements ProjectManipulator {
 
     @Inject
     @Delegate
     @Any
-    private Project project;
+    private ProjectManipulator projectManipulator;
 
     public static final Person cleverGuy = new Person("Guy", "Clever");
 
     @Override
     public void setRandomProjectManager() {
-        project.setProjectManager(cleverGuy);
+        projectManipulator.setProjectManager(cleverGuy);
     }
 }

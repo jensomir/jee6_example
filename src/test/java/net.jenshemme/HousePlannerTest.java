@@ -3,16 +3,19 @@ package net.jenshemme;
 import net.jenshemme.domain.Address;
 import net.jenshemme.domain.House;
 import net.jenshemme.domain.Project;
-import net.jenshemme.instrumentation.ProjectDecorator;
+import net.jenshemme.instrumentation.ProjectManipulatorDecorator;
 import net.jenshemme.service.HousePlanner;
+import net.jenshemme.service.ProjectManipulator;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import javax.ejb.EJB;
 import javax.ejb.embeddable.EJBContainer;
+import javax.inject.Inject;
 import javax.naming.NamingException;
 import java.util.Date;
+import java.util.Properties;
 
 import static org.junit.Assert.*;
 
@@ -26,7 +29,15 @@ public class HousePlannerTest {
     @Before
     public void start() throws NamingException {
         startPoint = new Date().getTime();
-        container = EJBContainer.createEJBContainer();
+
+        Properties p = new Properties();
+        p.put("plouseds", "new://Resource?type=DataSource");
+        p.put("plouseds.JdbcDriver", "org.postgresql.Driver");
+        p.put("plouseds.JdbcUrl", "jdbc:postgresql://localhost:5432/plouse");
+        p.put("plouseds.UserName", "plouse");
+        p.put("plouseds.Password", "plouse");
+
+        container = EJBContainer.createEJBContainer(p);
         container.getContext().bind("inject", this);
 
     }
@@ -40,8 +51,10 @@ public class HousePlannerTest {
     }
 
     @EJB
-    private HousePlanner testSubject;
+    HousePlanner testSubject;
 
+    @Inject
+    ProjectManipulator projectManipulator;
 
     @Test
     public void testCreateEmptyProject() throws Exception {
@@ -57,9 +70,9 @@ public class HousePlannerTest {
         assertNotNull(testSubject);
         Project project = testSubject.createProject(null, null);
         assertNull(project.getProjectManager());
-        project.setRandomProjectManager();
-        assertNotNull(project.getProjectManager());
-        assertEquals(ProjectDecorator.cleverGuy.getName(), project.getProjectManager().getName());
+        projectManipulator.setRandomProjectManager();
+        assertNotNull(projectManipulator.getProjectManager());
+        assertEquals(ProjectManipulatorDecorator.cleverGuy.getName(), projectManipulator.getProjectManager().getName());
     }
 
     @Test
